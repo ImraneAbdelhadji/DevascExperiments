@@ -1,0 +1,33 @@
+## Uitgevoerde stappen
+
+### 1. GET /books
+Ik gebruik de GET /books endpoint om alle boeken op te halen.  
+De API geeft een JSON-response terug met statuscode 200.
+
+### 2. Authenticatie
+Ik vraag een token aan via de POST /loginViaBasic endpoint met:
+- username: cisco  
+- password: Cisco123!  
+
+Dit token gebruik ik als X-API-KEY om beveiligde API’s te kunnen gebruiken.
+
+### 3. POST /books
+Ik voeg nieuwe boeken toe aan de bibliotheek met de POST /books endpoint.
+
+### 4. GET /books/{id}
+Ik haal één specifiek boek op door het ID mee te geven in de URL.
+
+### 5. DELETE /books/{id}
+Ik verwijder een boek uit de bibliotheek met behulp van zijn ID.
+
+### 6. Postman
+Ik voer dezelfde API-calls ook uit in Postman om de werking te controleren.
+
+### 7. Python
+Met het script add100RandomBooks.py voeg ik automatisch 100 boeken toe aan de API.
+
+---
+
+## Conclusie
+In deze oefening leer ik hoe ik REST API’s kan gebruiken, beveiligen met tokens
+en testen met verschillende tools zoals Swagger, Postman en Python.
