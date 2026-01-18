@@ -14,6 +14,8 @@ while True:
         "&appid=" + api_key +
         "&units=metric"
     )
+    
+    print(url)
 
     response = requests.get(url)
     data = response.json()
