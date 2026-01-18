@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weer App</title>
+</head>
+<body>
+    <h1>Weer opvragen</h1>
+
+    <form method="POST">
+        <label>Stad:</label>
+        <input type="text" name="city" required>
+        <button type="submit">Zoek</button>
+    </form>
+
+    {% if weather %}
+        <h2>Resultaat</h2>
+        <p><strong>Stad:</strong> {{ weather.city }}</p>
+        <p><strong>Temperatuur:</strong> {{ weather.temp }} °C</p>
+        <p><strong>Weer:</strong> {{ weather.desc }}</p>
+    {% endif %}
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>
