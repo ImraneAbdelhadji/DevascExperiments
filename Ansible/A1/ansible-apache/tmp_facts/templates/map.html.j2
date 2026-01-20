@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Kaart – {{ location_name }}</title>
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kaart – huidige locatie van de viewer</h1>
+    <p>De browser vraagt om je locatie. Toestaan = kaart zoomt in op jouw positie.</p>
+
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin="">
+    </script>
+
+    <script>
+        // Basiskaart
+        var map = L.map('map').setView([50.8503, 4.3517], 5); // start: ongeveer Brussel
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Browser-geolocatie
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (pos) {
+                var lat = pos.coords.latitude;
+                var lon = pos.coords.longitude;
+                var accuracy = pos.coords.accuracy;
+
+                var userMarker = L.marker([lat, lon]).addTo(map);
+                userMarker.bindPopup("Jij bent (ongeveer) hier.").openPopup();
+
+                map.setView([lat, lon], 13);
+
+            }, function (err) {
+                console.log("Geolocatie geweigerd of mislukt:", err.message);
+            });
+        } else {
+            console.log("Geolocatie niet ondersteund in deze browser.");
+        }
+    </script>
+</body>
+</html>

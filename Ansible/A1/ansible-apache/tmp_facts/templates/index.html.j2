@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Apache 8808 - Home</title>
+</head>
+<body>
+    <!-- Simpele "logo"-balk -->
+    <div style="background:#222;color:#fff;padding:15px;font-size:20px;">
+        <strong>LOGO</strong> – developed by {{ student_name }}
+    </div>
+
+    <h1>Welkom op mijn Apache webserver (poort 8808)</h1>
+
+    <ul>
+        <li>Huidig IP-adres van de server: <strong>{{ ansible_default_ipv4.address }}</strong></li>
+        <li>Huidige datum: <strong>{{ ansible_date_time.date }}</strong></li>
+        <li>Huidige tijd: <strong>{{ ansible_date_time.time }}</strong></li>
+    </ul>
+
+    <p>
+        <a href="/map.html">Klik hier voor de kaart van mijn locatie</a>
+    </p>
+
+    <p>
+        (Locatie volgens opdracht: <strong>{{ location_name }}</strong>)
+    </p>
+</body>
+</html>

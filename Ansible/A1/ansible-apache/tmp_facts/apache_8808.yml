@@ -1,0 +1,66 @@
+---
+- name: Install and configure Apache on port 8808
+  hosts: webservers
+  become: yes
+  gather_facts: yes
+
+  vars:
+    student_name: "Jouw Naam Hier"
+    location_name: "Jouw Stad / Land"
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install latest Apache httpd server
+      ansible.builtin.apt:
+        name: apache2
+        state: latest
+
+    - name: Ensure Apache is started and enabled
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    # --- Luisteren op poort 8808 toevoegen ---
+    - name: Ensure Apache listens on port 8808
+      ansible.builtin.lineinfile:
+        path: /etc/apache2/ports.conf
+        line: "Listen 8808"
+        insertafter: "^Listen 80"
+        state: present
+      notify: Restart Apache
+
+    # --- VirtualHost naar 8808 aanpassen ---
+    - name: Change default VirtualHost to port 8808
+      ansible.builtin.replace:
+        path: /etc/apache2/sites-available/000-default.conf
+        regexp: "<VirtualHost \\*:80>"
+        replace: "<VirtualHost *:8808>"
+      notify: Restart Apache
+
+    # --- Homepagina template ---
+    - name: Deploy custom home page
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+
+    # --- Map pagina template ---
+    - name: Deploy map page
+      ansible.builtin.template:
+        src: templates/map.html.j2
+        dest: /var/www/html/map.html
+        owner: root
+        group: root
+        mode: '0644'
+
+  handlers:
+    - name: Restart Apache
+      ansible.builtin.service:
+        name: apache2
+        state: restarted
