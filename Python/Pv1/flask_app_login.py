@@ -82,19 +82,19 @@ def login():
 
     if record and record[0] == password_hash:
         session["user"] = username   # 👈 login onthouden
-        return redirect(url_for("account"))
+        return redirect(url_for("map"))
 
     return "Foute login"
 
 # -------------------------
-# ACCOUNT
+# MAP
 # -------------------------
-@app.route("/account")
-def account():
+@app.route("/map")
+def map():
     if "user" not in session:
         return redirect(url_for("login"))
+    return render_template("map.html", user=session["user"])
 
-    return render_template("account.html", user=session["user"])
 
 # -------------------------
 # LOGOUT (optioneel maar netjes)
