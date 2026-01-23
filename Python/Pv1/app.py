@@ -1,10 +1,9 @@
-from flask import Flask, request, render_template, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 import hashlib
 
 app = Flask(__name__)
-app.secret_key = "devasc-secret-key"   # nodig voor sessions
-
+app.secret_key = "devasc_secret_key"
 DB_NAME = "user.db"
 
 # -------------------------
@@ -40,9 +39,8 @@ def signup():
     if request.method == "GET":
         return render_template("signup.html")
 
-    username = request.form.get("username")
-    password = request.form.get("password")
-
+    username = request.form["username"]
+    password = request.form["password"]
     password_hash = hashlib.sha256(password.encode()).hexdigest()
 
     db = get_db()
@@ -67,8 +65,8 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
 
-    username = request.form.get("username")
-    password = request.form.get("password")
+    username = request.form["username"]
+    password = request.form["password"]
     password_hash = hashlib.sha256(password.encode()).hexdigest()
 
     db = get_db()
@@ -81,13 +79,13 @@ def login():
     db.close()
 
     if record and record[0] == password_hash:
-        session["user"] = username   # 👈 login onthouden
+        session["user"] = username
         return redirect(url_for("map"))
 
     return "Foute login"
 
 # -------------------------
-# MAP
+# MAP (AFGESCHERMD)
 # -------------------------
 @app.route("/map")
 def map():
@@ -95,14 +93,19 @@ def map():
         return redirect(url_for("login"))
     return render_template("map.html", user=session["user"])
 
-
 # -------------------------
-# LOGOUT (optioneel maar netjes)
+# LOGOUT
 # -------------------------
 @app.route("/logout")
 def logout():
-    session.clear()
+    session.pop("user", None)
     return redirect(url_for("login"))
+
+@app.route("/time")
+def map():
+    if "user" not in session:
+        return redirect(url_for("login"))
+    return render_template("time.html", user=session["user"])
 
 # -------------------------
 # MAIN
