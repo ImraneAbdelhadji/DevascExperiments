@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Create New User Account</title>
+</head>
+<body>
+    <h1>Create a New User Account</h1>
+
+    <!-- Stuurt een POST naar /signup/v2 van dezelfde server -->
+    <form action="/signup/v2" method="post">
+        <p>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </p>
+
+        <p>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </p>
+
+        <p>
+            <button type="submit">Create Account</button>
+        </p>
+    </form>
+
+    <p>
+        Heb je al een account?
+        <a href="/login">Login hier</a>
+    </p>
+</body>
+</html>
