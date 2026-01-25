@@ -21,39 +21,33 @@ en hoe poorten en bestanden correct worden gebruikt binnen een container.
 ---
 
 ```bash
-Flask applicatie lokaal testen
+#Flask applicatie lokaal testen
 python3 sample_app.py
 
 
-Testen:
-
+#Testen:
 curl http://0.0.0.0:8080
 
-
-Stoppen:
-
-CTRL + C
-
-Docker build & run script uitvoeren
+#Docker build & run script uitvoeren
 chmod a+x sample-app.sh
 bash sample-app.sh
 
-Controleren of de container draait
+#Controleren of de container draait
 docker ps
 
-Webapp testen in Docker
+#Webapp testen in Docker
 curl http://localhost:8080
 
-Logs van de container bekijken
+#Logs van de container bekijken
 docker logs samplerunning
 
-Container stoppen en verwijderen
+#Container stoppen en verwijderen
 docker stop samplerunning
 docker rm samplerunning
 
-Docker image verwijderen
+#Docker image verwijderen
 docker rmi sampleapp
 
-Containers en images opruimen (optioneel)
+#Containers en images opruimen (optioneel)
 docker system prune -f
 
